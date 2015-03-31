@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Visualization Tool</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- C3 CSS -->
+    <link href="../bower_components/c3/c3.css" rel="stylesheet" type="text/css">
+
+    <!-- NVD3 CSS -->
+    <link href="../bower_components/nvd3/build/nv.d3.css" rel="stylesheet" type="text/css">
+
+    <!-- MetisMenu CSS -->
+    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Visualization Tool</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <div class="navbar-default sidebar" role="navigation">
+
+                <form action="upload.php" method="post" enctype="multipart/form-data">
+                    Select image to upload:
+                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    <input type="submit" value="Upload Image" name="submit">
+                </form>
+                
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="drawRect()"><i class="fa fa-edit fa-fw"></i>Rectangle</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="drawCircle()"><i class="fa fa-edit fa-fw"></i>Circle</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="stackChart()"><i class="fa fa-edit fa-fw"></i>Stacked Chart<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                            <li>
+                                <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#myModal">Attributes</button>
+                            </li>
+                        </ul>
+                        </li>
+                        <li>
+                            <a href="#" onclick="scatterChart()"><i class="fa fa-edit fa-fw"></i>Scatter Chart<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                            <li>
+                                <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#myModal">Attributes</button>
+                            </li>
+                        </ul>
+                        </li>
+                        <li>
+                            <a href="#" onclick="bubbleChart()"><i class="fa fa-edit fa-fw"></i>Bubble Plot<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                            <li>
+                                <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#myModal">Attributes</button>
+                            </li>
+                        </ul>
+                        </li>
+                        <li>
+                            <a href="#" onclick="clearSVG()"><i class="fa fa-edit fa-fw"></i>Clear</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <svg id="canvasSVG" border="border" width="1000" height="800">
+            </svg>
+        </div> 
+
+        <!-- Button trigger modal -->
+
+
+        <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Visualization Attributes</h4>
+      </div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="width">Width</label>  
+  <div class="col-md-4">
+  <input id="width" name="width" type="text" placeholder="Enter the width" class="form-control input-md">  
+  </div>
+</div>
+
+<br>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="height">Height</label>  
+  <div class="col-md-4">
+  <input id="height" name="height" type="text" placeholder="Enter the height" class="form-control input-md">
+    
+  </div>
+</div>
+
+<br>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="color">Color</label>
+  <div class="col-md-4">
+    <select id="color" name="color" class="form-control">
+      <option value="1">Red</option>
+      <option value="2">Green</option>
+      <option value="3">Blue</option>
+      <option value="4">Yellow</option>
+      <option value="5">Black</option>
+    </select>
+  </div>
+</div>
+
+<br>
+
+<!-- File Button --> 
+<div class="form-group">
+  <label class="col-md-4 control-label" for="filebutton">Import File</label>
+  <div class="col-md-4">
+    <input id="filebutton" name="filebutton" class="input-file" type="file">
+  </div>
+</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- jQuery -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- C3 JavaScript -->
+    <script src="../bower_components/c3/c3.min.js"></script>
+
+    <!-- D3 JavaScript -->
+    <script src="../bower_components/d3/d3.min.js"></script>
+
+    <!-- NVD3 JavaScript -->
+    <script src="../bower_components/nvd3/build/nv.d3.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/rect.js"></script>
+    <script src="../dist/js/stackChart.js"></script>
+    <script src="../dist/js/circle.js"></script>
+    <script src="../dist/js/clear.js"></script>
+    <script src="../dist/js/bubble.js"></script>
+    <script src="../dist/js/scatter.js"></script>
+
+</body>
+
+</html>
