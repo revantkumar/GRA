@@ -642,17 +642,40 @@ function Gneiss(config)
 		g.bargridLabelBottomMargin(config.bargridLabelBottomMargin *1);
 		g.axisBarGap(config.axisBarGap * 1);
 		g.allowAxisOverlap(config.allowAxisOverlap);
-		
 
+		/*var zoom = d3.behavior.zoom()
+	    .scaleExtent([1, 10])
+	    .on("zoom", zoomed);
+
+		var drag = d3.behavior.drag()
+	    .origin(function(d) { return d; })
+	    .on("dragstart", dragstarted)
+	    .on("drag", dragged)
+	    .on("dragend", dragended);*/
 
 		//append svg to container using svg
 		g.chartElement(d3.select(g.containerId()).select(g.svgId()).append("svg")
 			.attr("id", "chart")
 			.attr("width","100%") //set width to 100%
-			.attr("height","100%")); //set height to 100%
+			.attr("height","100%"));
+			//.call(zoom)); //set height to 100%
+
+	$(function() {
+  panZoomInstance = svgPanZoom("#chart", {
+    zoomEnabled: true,
+    //controlIconsEnabled: true,
+    fit: true,
+    center: true,
+    minZoom: 0.5
+  });
+  
+  // zoom out
+  panZoomInstance.zoom(1)
+})
+
 			
-		g.width(g.containerElement().width()); //save the width in pixels
-		g.height(g.containerElement().height()); //save the height in pixels
+		g.width(g.containerElement().width()-100); //save the width in pixels
+		g.height(g.containerElement().height()-100); //save the height in pixels
 		
 		//add rect, use as a background to prevent transparency
 		g.chartElement().append("rect")
@@ -697,6 +720,23 @@ function Gneiss(config)
 			.attr("x", g.padding().left)
 			.attr("class", "metaText")
 			.text(g.credit()));
+
+		/*function zoomed() {
+		  svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+		}
+
+		function dragstarted(d) {
+		  d3.event.sourceEvent.stopPropagation();
+		  d3.select(this).classed("dragging", true);
+		}
+
+		function dragged(d) {
+		  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+		}
+
+		function dragended(d) {
+		  d3.select(this).classed("dragging", false);
+		}*/
       
 		return this;
 	};

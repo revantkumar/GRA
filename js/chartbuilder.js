@@ -76,6 +76,7 @@ ChartBuilder = {
 
 		return csv_matrix;
 	},
+	
 	// Given the matrix containing the well formated csv, create the object that
 	// is going to be used later
 	makeDataObj: function(csv_matrix) {
