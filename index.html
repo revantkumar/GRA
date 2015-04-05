@@ -55,11 +55,10 @@
                   <ul class="nav" id="side-menu">            
                   <div id="chartOptions" class="interfaceCol">
                     <li>
-                      <form action="upload.php" method="post" enctype="multipart/form-data">
-                        Select image to upload:
-                        <input type="file" name="fileToUpload" id="fileToUpload" class="file">
-                        <input type="submit" value="Upload Image" name="submit" class="submit">
-                      </form>
+                      Enter Delimiter <input type = "text" id = "delim" /><br/>
+                      <input type=file id="files" />
+                      <button id="upload">Upload</button>
+                      <br/><br/>
                     </li>
 
                     <hr>
@@ -97,6 +96,16 @@
                     </div>
                     </li>
 
+                    <li>
+                    <div class="optionBlock">
+                      <ul>
+                      <li>
+                      <a href="#" onclick="drawPlot()"><i class="fa fa-edit fa-fw"></i>Add Plot</a>
+                      </li>
+                      </ul>
+                    </div>
+                    </li>
+
                     <hr>
 
                     <li>
@@ -111,6 +120,22 @@
                         </li>
                         <li>
                             <a href="#" onclick="drawCircle()"><i class="fa fa-edit fa-fw"></i>Pencil</a>
+                        </li>
+                      </ul>
+                      </div>
+                    </li>
+
+                    <hr>
+
+                    <li>
+                      <div class="optionBlock">
+                        <h4> Other Types </h4>
+                        <ul>
+                        <li>
+                            <a href="#" onclick="drawText()"><i class="fa fa-edit fa-fw"></i>Text Box</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="drawImage()"><i class="fa fa-edit fa-fw"></i>Image</a>
                         </li>
                       </ul>
                       </div>
@@ -308,6 +333,8 @@
     <script src="js/svg-pan-zoom.js"></script>  
 		<script src="js/gneisschart.js" charset="utf-8"></script>
     <script src="js/chartbuilder.js"></script>
+    <script src="js/text.js"></script>
+    <script src="js/input_file.js"></script>
     <!--<script src="js/svgPan.js"></script>-->
     <!--<script src="js/newpan.js"></script>-->    	
     <script src="js/rect.js"></script>
